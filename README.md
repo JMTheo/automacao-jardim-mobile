@@ -1,16 +1,33 @@
-# mobile_jardim
+# iPlant
 
-A new Flutter project.
+Cliente Mobile para manipulação da automação do jardim
 
-## Getting Started
+TO DO:
+- [ ] Arranjar um nome melhor para o projeto
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Instalação
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+É necessário ter o [Flutter](https://flutter.dev/docs/get-started/install/windows), [git](https://git-scm.com/downloads) e o [Android-Studio](https://developer.android.com/studio?gclid=Cj0KCQjw59n8BRD2ARIsAAmgPmJmZib1nvPq_tRrtUjVB5BOxw2J_QoQUSU3g8iPxw6CQYT1QPbjnQIaAs41EALw_wcB&gclsrc=aw.ds) instalado, para isso clique nos links. Eu recomendo utilizar o Vs Code para testar e codificar com o flutter.
+Além disso será necessário configurar as variáveis de ambiente do Flutter e do Android Studio, assim como os plugins do Flutter parao editor de sua preferência.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Executar o projeto
+
+Primeio baixe os pacotes necessários com o comando abaixo
+
+```bash
+flutter run
+
+```
+
+Caso esteja usando o Vs Code, instale a extensão do Flutter e aperte
+
+```bash
+ctrl + F5
+```
+
+## Membros do grupo
+- João Matheus
+- José Augusto
+- Patrick Wesley
+- Wesley Vitorio

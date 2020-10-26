@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_jardim/components/bottom_card.dart';
 import 'package:mobile_jardim/components/card_plant.dart';
 
 class Home extends StatefulWidget {
@@ -23,18 +24,64 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(vertical: 20.0),
-        height: 400.0,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            CardPlant(urlImg: 'assets/img/hortela.png', apelidoPlanta: 'Cleitinho', especiePlanta: 'Hortelã',),
-            CardPlant(urlImg: 'assets/img/planta-carnivora.png', apelidoPlanta: 'Maria', especiePlanta: 'Planta Carnívora',),
-            CardPlant(urlImg: 'assets/img/tomate.png', apelidoPlanta: 'Matilda', especiePlanta: 'Tomate',),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 4,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 20.0),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    CardPlant(
+                      urlImg: 'assets/img/hortela.png',
+                      apelidoPlanta: 'Cleitinho',
+                      especiePlanta: 'Hortelã',
+                      estadoLampada: true,
+                      umidadeDoSolo: '90%',
+                    ),
+                    CardPlant(
+                      urlImg: 'assets/img/planta-carnivora.png',
+                      apelidoPlanta: 'Maria',
+                      especiePlanta: 'Planta Carnívora',
+                      estadoLampada: false,
+                      umidadeDoSolo: '15%',
+
+                    ),
+                    CardPlant(
+                      urlImg: 'assets/img/tomate.png',
+                      apelidoPlanta: 'Matilda',
+                      especiePlanta: 'Tomate',
+                      estadoLampada: true,
+                      umidadeDoSolo: '50%',
+
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                child: Row(
+                  children: [
+                    BottomCard(
+                      titulo: 'Temperatura do ambiente',
+                      valor: '40 ºC',
+                    ),
+                    SizedBox(width: 10),
+                    BottomCard(
+                      titulo: 'Umidade do ambiente',
+                      valor: '80%',
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
