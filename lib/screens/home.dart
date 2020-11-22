@@ -61,15 +61,24 @@ class _HomeState extends State<Home> {
             flex: 2,
             child: Row(
               children: [
-                BottomCard(
-                  titulo: 'Temperatura \ndo Ambiente',
-                  valor: '${controller.temperatura}ºC',
-                ),
-                BottomCard(
-                  titulo: 'Umidade \ndo Ar',
-                  valor: '${controller.umidadeAr}%',
-                ),
-                BottomCard(titulo: 'Luminosidade', valor: '100%',)
+                Observer(builder: (_) {
+                  return BottomCard(
+                    titulo: 'Temperatura \ndo Ambiente',
+                    valor: '${controller.temperatura}ºC',
+                  );
+                }),
+                Observer(builder: (_) {
+                  return BottomCard(
+                    titulo: 'Umidade \ndo Ar',
+                    valor: '${controller.umidadeAr}%',
+                  );
+                }),
+                Observer(builder: (_) {
+                  return BottomCard(
+                    titulo: 'Luminosidade',
+                    valor: '${controller.luminosidade}',
+                  );
+                }),
               ],
             ),
           ),
@@ -77,5 +86,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
 }

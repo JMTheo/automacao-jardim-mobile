@@ -12,14 +12,14 @@ mixin _$Controller on ControllerBase, Store {
   final _$temperaturaAtom = Atom(name: 'ControllerBase.temperatura');
 
   @override
-  int get temperatura {
+  double get temperatura {
     _$temperaturaAtom.context.enforceReadPolicy(_$temperaturaAtom);
     _$temperaturaAtom.reportObserved();
     return super.temperatura;
   }
 
   @override
-  set temperatura(int value) {
+  set temperatura(double value) {
     _$temperaturaAtom.context.conditionallyRunInAction(() {
       super.temperatura = value;
       _$temperaturaAtom.reportChanged();
@@ -46,14 +46,14 @@ mixin _$Controller on ControllerBase, Store {
   final _$umidadeSoloAtom = Atom(name: 'ControllerBase.umidadeSolo');
 
   @override
-  int get umidadeSolo {
+  double get umidadeSolo {
     _$umidadeSoloAtom.context.enforceReadPolicy(_$umidadeSoloAtom);
     _$umidadeSoloAtom.reportObserved();
     return super.umidadeSolo;
   }
 
   @override
-  set umidadeSolo(int value) {
+  set umidadeSolo(double value) {
     _$umidadeSoloAtom.context.conditionallyRunInAction(() {
       super.umidadeSolo = value;
       _$umidadeSoloAtom.reportChanged();
@@ -77,8 +77,35 @@ mixin _$Controller on ControllerBase, Store {
     }, _$umidadeArAtom, name: '${_$umidadeArAtom.name}_set');
   }
 
+  final _$luminosidadeAtom = Atom(name: 'ControllerBase.luminosidade');
+
+  @override
+  int get luminosidade {
+    _$luminosidadeAtom.context.enforceReadPolicy(_$luminosidadeAtom);
+    _$luminosidadeAtom.reportObserved();
+    return super.luminosidade;
+  }
+
+  @override
+  set luminosidade(int value) {
+    _$luminosidadeAtom.context.conditionallyRunInAction(() {
+      super.luminosidade = value;
+      _$luminosidadeAtom.reportChanged();
+    }, _$luminosidadeAtom, name: '${_$luminosidadeAtom.name}_set');
+  }
+
   final _$ControllerBaseActionController =
       ActionController(name: 'ControllerBase');
+
+  @override
+  dynamic atualizarDados(int umi, double umiS, double temp, int luz) {
+    final _$actionInfo = _$ControllerBaseActionController.startAction();
+    try {
+      return super.atualizarDados(umi, umiS, temp, luz);
+    } finally {
+      _$ControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   dynamic mudarEstadoLampada() {

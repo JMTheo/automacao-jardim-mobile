@@ -20,7 +20,7 @@ const kLabelTextStyle = TextStyle(
 );
 
 const kNumbersTextStyle = TextStyle(
-  fontSize: 40.0,
+  fontSize: 30.0,
   fontWeight: FontWeight.w900,
 );
 const kActiveCardColor = Color(0xFF1D1E33);

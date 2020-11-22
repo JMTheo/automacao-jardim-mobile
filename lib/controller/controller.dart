@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:mobx/mobx.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
+import 'package:mqtt_client/mqtt_server_client.dart';
 part 'controller.g.dart';
 
 class Controller = ControllerBase with _$Controller;
@@ -11,11 +13,11 @@ abstract class ControllerBase with Store {
   }
   //tipo da variavel |Nome Var   | Valor a ser iniciado
   @observable
-  int temperatura = 28;
+  double temperatura = 28;
   @observable
   bool estadoLampada = false;
   @observable
-  int umidadeSolo = 80;
+  double umidadeSolo = 80.0;
   @observable
   int umidadeAr = 99;
   @observable
@@ -27,11 +29,19 @@ abstract class ControllerBase with Store {
   String clientIdentifier = 'flutter-mobile';
   String topic = 'iot/casa';
 
-  mqtt.MqttClient client;
+  MqttServerClient client;
   mqtt.MqttConnectionState connectionState;
   StreamSubscription subscription;
 
   //Funçãp a ser executada
+  @action
+  atualizarDados(int umi, double umiS, double temp, int luz) {
+    umidadeAr = umi;
+    umidadeSolo = umiS;
+    temperatura = temp;
+    luminosidade = luz;
+  }
+
   @action
   mudarEstadoLampada() {
     String msg = '';
@@ -49,23 +59,14 @@ abstract class ControllerBase with Store {
   }
 
   /*
-  Assina o tópico onde virão os dados de temperatura
-   */
-  void _subscribeToTopic(String topic) {
-    if (connectionState == mqtt.MqttConnectionState.connected) {
-      print('[MQTT client] Subscribing to $topic');
-      client.subscribe(topic, mqtt.MqttQos.exactlyOnce);
-    }
-  }
-
-  /*
   Conecta no servidor MQTT à partir dos dados configurados nos atributos desta classe (broker, port, etc...)
    */
   void _connect() async {
-    client = mqtt.MqttClient(broker, '');
+    client = MqttServerClient(broker, '');
     client.port = port;
     client.keepAlivePeriod = 30;
     client.onDisconnected = _onDisconnected;
+    client.onSubscribed = subscribeToTopic;
 
     final mqtt.MqttConnectMessage connMess = mqtt.MqttConnectMessage()
         .withClientIdentifier(clientIdentifier)
@@ -82,17 +83,30 @@ abstract class ControllerBase with Store {
       _disconnect();
     }
 
-    /// Check if we are connected
-    if (client.connectionState == mqtt.MqttConnectionState.connected) {
-      print('[MQTT client] connected');
+    /// Check we are connected
+    if (client.connectionStatus.state == mqtt.MqttConnectionState.connected) {
+      print('DEBUG::Broker client connected');
+      subscribeToTopic(topic);
     } else {
-      print('[MQTT client] ERROR: MQTT client connection failed - '
-          'disconnecting, state is ${client.connectionStatus}');
-      _disconnect();
+      print(
+          'DEBUG::ERROR Broker client connection failed - disconnecting, state is ${client.connectionStatus.state}');
+      client.disconnect();
     }
+    client.updates.listen((dynamic c) {
+      final mqtt.MqttPublishMessage recMess = c[0].payload;
+      final pt = mqtt.MqttPublishPayload.bytesToStringAsString(
+          recMess.payload.message);
 
-    subscription = client.updates.listen(_onMessage);
-    _subscribeToTopic(topic);
+      dynamic parsed = json.decode(pt);
+      int tempUmidadeAr = parsed['umi'];
+      double tempTemperatura = parsed['temp'];
+      double tempUmidadeSolo = parsed['umi_s'];
+      int tempLuminosidade = parsed['luz'];
+      atualizarDados(
+          tempUmidadeAr, tempUmidadeSolo, tempTemperatura, tempLuminosidade);
+
+      print('umi: ${parsed['umi']}');
+    });
   }
 
   /*
@@ -119,20 +133,10 @@ abstract class ControllerBase with Store {
   }
 
   /*
-  Escuta quando mensagens são escritas no tópico. É aqui que lê os dados do servidor MQTT e modifica o necessário
+  Assina o tópico onde virão os dados de temperatura
    */
-  void _onMessage(List<mqtt.MqttReceivedMessage> event) {
-    print(event.length);
-    final mqtt.MqttPublishMessage recMess =
-        event[0].payload as mqtt.MqttPublishMessage;
-    final String message =
-        mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-    print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
-        'payload is <-- ${message} -->');
-    print(client.connectionState);
-    print("[MQTT client] message with topic: ${event[0].topic}");
-    print("[MQTT client] message with message: $message");
-    print("dados" + message);
-    //temperatura = int.parse(message);
+  void subscribeToTopic(String topic) {
+    client.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+    print('DEBUG::Subscription confirmed for topic $topic');
   }
 }

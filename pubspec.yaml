@@ -28,7 +28,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   font_awesome_flutter: ^8.10.0
   cupertino_icons: ^1.0.0
-  mqtt_client: ^5.5.3
+  mqtt_client: ^8.1.0
   mobx: ^0.4.0+1
   flutter_mobx: ^0.3.6
 

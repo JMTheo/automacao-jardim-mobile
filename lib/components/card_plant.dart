@@ -17,7 +17,7 @@ class CardPlant extends StatefulWidget {
   final String apelidoPlanta;
   final String especiePlanta;
   final Function functionL;
-  int umidadeDoSolo;
+  double umidadeDoSolo;
   bool estadoLampada;
 
   @override
