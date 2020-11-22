@@ -6,36 +6,33 @@ class BottomCard extends StatelessWidget {
 
   final String valor;
   final String titulo;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
         height: double.infinity,
+        margin: EdgeInsets.all(15.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[700],
-              blurRadius: 2.0,
-              spreadRadius: 0.0,
-              offset: Offset(2.0, 2.0), // shadow direction: bottom right
-            )
-          ],
-          border:
-              Border.all(color: Color(0xFF31A05F), style: BorderStyle.solid),
-          borderRadius: BorderRadius.circular(10),
+          color: kActiveCardColor,
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               this.valor,
-              style: kTemperaturTitle,
+              style: kNumbersTextStyle,
             ),
             SizedBox(
               height: 50,
             ),
-            Text(this.titulo)
+            Text(
+              this.titulo,
+              style: kLabelTextStyle,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

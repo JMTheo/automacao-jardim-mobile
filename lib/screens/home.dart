@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobile_jardim/controller/controller.dart';
+
 import 'package:mobile_jardim/components/bottom_card.dart';
 import 'package:mobile_jardim/components/card_plant.dart';
+
+final controller = Controller();
 
 class Home extends StatefulWidget {
   @override
@@ -12,76 +17,65 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Automação Residencial'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              print('opa');
-            },
-          ),
-        ],
+        title: Center(child: Text('Automação Residencial')),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(
-              flex: 4,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 20.0),
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    CardPlant(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 4,
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 20.0),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Observer(builder: (_) {
+                    return CardPlant(
                       urlImg: 'assets/img/hortela.png',
                       apelidoPlanta: 'Cleitinho',
                       especiePlanta: 'Hortelã',
-                      estadoLampada: true,
-                      umidadeDoSolo: '90%',
-                    ),
-                    CardPlant(
-                      urlImg: 'assets/img/planta-carnivora.png',
-                      apelidoPlanta: 'Maria',
-                      especiePlanta: 'Planta Carnívora',
-                      estadoLampada: false,
-                      umidadeDoSolo: '15%',
-
-                    ),
-                    CardPlant(
-                      urlImg: 'assets/img/tomate.png',
-                      apelidoPlanta: 'Matilda',
-                      especiePlanta: 'Tomate',
-                      estadoLampada: true,
-                      umidadeDoSolo: '50%',
-
-                    ),
-                  ],
-                ),
+                      estadoLampada: controller.estadoLampada,
+                      umidadeDoSolo: controller.umidadeSolo,
+                      functionL: controller.mudarEstadoLampada,
+                    );
+                  }),
+                  CardPlant(
+                    urlImg: 'assets/img/planta-carnivora.png',
+                    apelidoPlanta: 'Maria',
+                    especiePlanta: 'Planta Carnívora',
+                    estadoLampada: controller.estadoLampada,
+                    umidadeDoSolo: 15,
+                  ),
+                  CardPlant(
+                    urlImg: 'assets/img/tomate.png',
+                    apelidoPlanta: 'Matilda',
+                    especiePlanta: 'Tomate',
+                    estadoLampada: controller.estadoLampada,
+                    umidadeDoSolo: 50,
+                  ),
+                ],
               ),
             ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                margin: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-                child: Row(
-                  children: [
-                    BottomCard(
-                      titulo: 'Temperatura do ambiente',
-                      valor: '40 ºC',
-                    ),
-                    SizedBox(width: 10),
-                    BottomCard(
-                      titulo: 'Umidade do ambiente',
-                      valor: '80%',
-                    ),
-                  ],
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              children: [
+                BottomCard(
+                  titulo: 'Temperatura \ndo Ambiente',
+                  valor: '${controller.temperatura}ºC',
                 ),
-              ),
+                BottomCard(
+                  titulo: 'Umidade \ndo Ar',
+                  valor: '${controller.umidadeAr}%',
+                ),
+                BottomCard(titulo: 'Luminosidade', valor: '100%',)
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+
 }

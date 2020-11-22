@@ -4,3 +4,12 @@ https://www.behance.net/gallery/82659871/Smart-Home-Mobile-App?tracking_source=s
 https://dribbble.com/shots/7177261--Smart-Pot-App
   https://dribbble.com/shots/6158149-Plant-Shop
     https://dribbble.com/shots/13939702-Smart-Plant-App
+
+libs arduino mqtt
+https://github.com/plapointe6/EspMQTTClient
+https://github.com/256dpi/arduino-mqtt
+https://github.com/knolleary/pubsubclient/blob/master/examples/mqtt_esp8266/mqtt_esp8266.ino
+https://www.arduinoecia.com.br/enviando-mensagens-mqtt-modulo-esp32-wifi/
+
+
+http://laica.ifrn.edu.br/wp-content/uploads/2017/02/2015-CONNEPI-Desenvolvimento-de-um-m%C3%B3dulo-de-irriga%C3%A7%C3%A3o-automatizado.pdf

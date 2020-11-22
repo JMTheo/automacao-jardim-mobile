@@ -10,12 +10,14 @@ class CardPlant extends StatefulWidget {
       this.apelidoPlanta,
       this.especiePlanta,
       this.estadoLampada,
-      this.umidadeDoSolo});
+      this.umidadeDoSolo,
+      this.functionL});
 
   final String urlImg;
   final String apelidoPlanta;
   final String especiePlanta;
-  String umidadeDoSolo;
+  final Function functionL;
+  int umidadeDoSolo;
   bool estadoLampada;
 
   @override
@@ -38,14 +40,6 @@ class _CardPlantState extends State<CardPlant> {
         color: kDefaultColorGreen,
         border: Border.all(color: kDefaultColorGreen, style: BorderStyle.solid),
         borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[700],
-            blurRadius: 2.0,
-            spreadRadius: 0.0,
-            offset: Offset(2.0, 2.0), // shadow direction: bottom right
-          )
-        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -79,20 +73,15 @@ class _CardPlantState extends State<CardPlant> {
                 width: 10.0,
               ),
               MiniCard(
-                content: widget.umidadeDoSolo,
+                content: widget.umidadeDoSolo.toString() + '%',
               ), //Dado sensor de umidade de solo
               MiniCard(
                 content: FontAwesomeIcons.tint,
-              ), //Acionar manualmente a agua
+              ),
               MiniCard(
                 content: _mudarLuz(),
-                onTap: () {
-                  print('luz');
-                  setState(() {
-                    this.widget.estadoLampada = !this.widget.estadoLampada;
-                  });
-                },
-              ), //Desligar a luz do ambiente
+                onTap: widget.functionL,
+              ),
               MiniCard(
                 content: FontAwesomeIcons.question,
                 onTap: () {
