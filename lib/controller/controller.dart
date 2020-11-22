@@ -5,6 +5,8 @@ import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
 part 'controller.g.dart';
 
+//A cada alteração no Observable rodar esse comando no terminal
+// flutter packages pub run build_runner build
 class Controller = ControllerBase with _$Controller;
 
 abstract class ControllerBase with Store {
@@ -17,7 +19,7 @@ abstract class ControllerBase with Store {
   @observable
   bool estadoLampada = false;
   @observable
-  double umidadeSolo = 80.0;
+  int umidadeSolo = 80;
   @observable
   int umidadeAr = 99;
   @observable
@@ -33,9 +35,9 @@ abstract class ControllerBase with Store {
   mqtt.MqttConnectionState connectionState;
   StreamSubscription subscription;
 
-  //Funçãp a ser executada
+  //Função a ser executada
   @action
-  atualizarDados(int umi, double umiS, double temp, int luz) {
+  atualizarDados(int umi, int umiS, double temp, int luz) {
     umidadeAr = umi;
     umidadeSolo = umiS;
     temperatura = temp;
@@ -48,9 +50,9 @@ abstract class ControllerBase with Store {
     estadoLampada = !estadoLampada;
 
     if (estadoLampada)
-      msg = 'ligarLampadaSala';
+      msg = 'lj';
     else
-      msg = 'desligarLampadaSala';
+      msg = 'dj';
 
     final builder1 = mqtt.MqttClientPayloadBuilder();
     builder1.addString(msg);
@@ -70,7 +72,7 @@ abstract class ControllerBase with Store {
 
     final mqtt.MqttConnectMessage connMess = mqtt.MqttConnectMessage()
         .withClientIdentifier(clientIdentifier)
-        .startClean() // Non persistent session for testing
+        .startClean()
         .keepAliveFor(30)
         .withWillQos(mqtt.MqttQos.atMostOnce);
     print('[MQTT client] MQTT client connecting....');
@@ -83,13 +85,13 @@ abstract class ControllerBase with Store {
       _disconnect();
     }
 
-    /// Check we are connected
+    /// Checando conexao
     if (client.connectionStatus.state == mqtt.MqttConnectionState.connected) {
       print('DEBUG::Broker client connected');
       subscribeToTopic(topic);
     } else {
       print(
-          'DEBUG::ERROR Broker client connection failed - disconnecting, state is ${client.connectionStatus.state}');
+          'DEBUG::ERRO Falha com a conexão com o broker - desconectando, estado atual: ${client.connectionStatus.state}');
       client.disconnect();
     }
     client.updates.listen((dynamic c) {
@@ -100,7 +102,7 @@ abstract class ControllerBase with Store {
       dynamic parsed = json.decode(pt);
       int tempUmidadeAr = parsed['umi'];
       double tempTemperatura = parsed['temp'];
-      double tempUmidadeSolo = parsed['umi_s'];
+      int tempUmidadeSolo = parsed['umi_s'];
       int tempLuminosidade = parsed['luz'];
       atualizarDados(
           tempUmidadeAr, tempUmidadeSolo, tempTemperatura, tempLuminosidade);

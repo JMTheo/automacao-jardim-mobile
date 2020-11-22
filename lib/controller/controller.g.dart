@@ -46,14 +46,14 @@ mixin _$Controller on ControllerBase, Store {
   final _$umidadeSoloAtom = Atom(name: 'ControllerBase.umidadeSolo');
 
   @override
-  double get umidadeSolo {
+  int get umidadeSolo {
     _$umidadeSoloAtom.context.enforceReadPolicy(_$umidadeSoloAtom);
     _$umidadeSoloAtom.reportObserved();
     return super.umidadeSolo;
   }
 
   @override
-  set umidadeSolo(double value) {
+  set umidadeSolo(int value) {
     _$umidadeSoloAtom.context.conditionallyRunInAction(() {
       super.umidadeSolo = value;
       _$umidadeSoloAtom.reportChanged();
@@ -98,7 +98,7 @@ mixin _$Controller on ControllerBase, Store {
       ActionController(name: 'ControllerBase');
 
   @override
-  dynamic atualizarDados(int umi, double umiS, double temp, int luz) {
+  dynamic atualizarDados(int umi, int umiS, double temp, int luz) {
     final _$actionInfo = _$ControllerBaseActionController.startAction();
     try {
       return super.atualizarDados(umi, umiS, temp, luz);
