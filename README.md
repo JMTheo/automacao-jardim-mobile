@@ -5,6 +5,8 @@ Cliente Mobile para manipulação da automação do jardim
 TO DO:
 - [ ] Arranjar um nome melhor para o projeto
 
+## DEMO
+![demo](https://media.giphy.com/media/4yjhdpNzgAAsy9OH1v/giphy.gif)
 
 ## Instalação
 
