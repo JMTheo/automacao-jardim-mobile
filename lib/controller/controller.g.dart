@@ -116,4 +116,14 @@ mixin _$Controller on ControllerBase, Store {
       _$ControllerBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  dynamic acionarAgua() {
+    final _$actionInfo = _$ControllerBaseActionController.startAction();
+    try {
+      return super.acionarAgua();
+    } finally {
+      _$ControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 }

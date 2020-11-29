@@ -1,12 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:mobx/mobx.dart';
+import 'package:flutter/material.dart';
+
+import 'package:bot_toast/bot_toast.dart';
+
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
+
+import 'package:mobx/mobx.dart';
 part 'controller.g.dart';
 
 //A cada alteração no Observable rodar esse comando no terminal
 // flutter packages pub run build_runner build
+
 class Controller = ControllerBase with _$Controller;
 
 abstract class ControllerBase with Store {
@@ -53,7 +59,24 @@ abstract class ControllerBase with Store {
       msg = 'lj';
     else
       msg = 'dj';
+    enviarMensagem(msg);
+  }
 
+  @action
+  acionarAgua() {
+    BotToast.showLoading(
+        duration: Duration(seconds: 1),
+        onClose: () {
+          BotToast.showText(
+              text: 'Sucesso',
+              align: Alignment(0, 0),
+              animationDuration: Duration(seconds: 1),
+              textStyle: TextStyle(fontSize: 40.0));
+        });
+    enviarMensagem('a');
+  }
+
+  void enviarMensagem(String msg) {
     final builder1 = mqtt.MqttClientPayloadBuilder();
     builder1.addString(msg);
     print('Enviando:: <<<< $msg >>>>');

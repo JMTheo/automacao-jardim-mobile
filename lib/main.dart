@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:bot_toast/bot_toast.dart';
+
 import 'package:mobile_jardim/screens/home.dart';
 
 void main() {
@@ -12,6 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'iPlant',
+      builder: BotToastInit(), //1. call BotToastInit
+      navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData.dark().copyWith(
           primaryColor: Color(0XFF0A0E21),
           scaffoldBackgroundColor: Color(0XFF0A0E21)),

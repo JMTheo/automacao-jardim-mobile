@@ -11,12 +11,14 @@ class CardPlant extends StatefulWidget {
       this.especiePlanta,
       this.estadoLampada,
       this.umidadeDoSolo,
+      this.functionA,
       this.functionL});
 
   final String urlImg;
   final String apelidoPlanta;
   final String especiePlanta;
   final Function functionL;
+  final Function functionA;
   int umidadeDoSolo;
   bool estadoLampada;
 
@@ -77,6 +79,7 @@ class _CardPlantState extends State<CardPlant> {
               ), //Dado sensor de umidade de solo
               MiniCard(
                 content: FontAwesomeIcons.tint,
+                onTap: widget.functionA,
               ),
               MiniCard(
                 content: _mudarLuz(),
