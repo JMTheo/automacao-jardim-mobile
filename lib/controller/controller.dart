@@ -68,10 +68,10 @@ abstract class ControllerBase with Store {
         duration: Duration(seconds: 1),
         onClose: () {
           BotToast.showText(
-              text: 'Sucesso',
+              text: 'Enviando sinal para acionar a água',
               align: Alignment(0, 0),
               animationDuration: Duration(seconds: 1),
-              textStyle: TextStyle(fontSize: 40.0));
+              textStyle: TextStyle(fontSize: 25.0));
         });
     enviarMensagem('a');
   }
