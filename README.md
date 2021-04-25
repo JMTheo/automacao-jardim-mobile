@@ -27,9 +27,3 @@ Caso esteja usando o Vs Code, instale a extensão do Flutter e aperte
 ```bash
 ctrl + F5
 ```
-
-## Membros do grupo
-- João Matheus
-- José Augusto
-- Patrick Wesley
-- Wesley Vitorio
